@@ -6,7 +6,7 @@ class DataBase:
         self.connection = sqlite3.connect("users.db", check_same_thread=False)
         self.cursor = self.connection.cursor()
         try:
-            self.cursor.execute("""CREATE TABLE users(id int)""")
+            self.cursor.execute("""CREATE TABLE users(id int, first_name TEXT, last_name TEXT)""")
             self.connection.commit()
         except:
             print("Already created!!")
@@ -22,8 +22,17 @@ class DataBase:
             return True
         
     
-    def addUser(self, id):
-        sql = "INSERT INTO users VALUES (?)"
-        self.cursor.execute(sql, [(id)])
+    def addUser(self, id, firstname, lastname):
+        sql = "INSERT INTO users VALUES (?, ?, ?)"
+        self.cursor.execute(sql, (id,firstname,lastname))
         self.connection.commit()
+
+
+    def get_info(self, id):
+        sql = "SELECT * FROM users WHERE id=?"
+        self.cursor.execute(sql, [(id)])
+        data = self.cursor.fetchall()
+        return data
+
+
 

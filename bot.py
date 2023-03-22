@@ -17,8 +17,13 @@ catogory.add('catagory_example','catagory_example','catagory_example', 'catagory
 @bot.message_handler(commands=['start', 'hello'])
 def startbot(message):
     # bot.reply_to(message, "welcome!!!", reply_markup=menu)
-    flag = db.checkUsernameExist(message.chat.id)
-    print(flag)
+    if db.checkUsernameExist(message.chat.id):
+        data=db.get_info(message.chat.id)
+        print(data)
+    else:
+        db.addUser(message.chat.id, message.from_user.first_name, message.from_user.last_name)
+        print("user added to database ")
+        bot.reply_to(message, "registerd succesfully")
 
 
 @bot.message_handler(commands=['show_products'])
