@@ -7,6 +7,8 @@ bot = telebot.TeleBot("6076557712:AAHiHRMsr68rOUm1-5BjpuDZUf4pmXwWimA")
 
 db = dataBase.DataBase()
 
+data = ()
+
 menu = types.ReplyKeyboardMarkup(resize_keyboard=True)
 menu.add("/show_products")
 
@@ -17,18 +19,25 @@ catogory.add('catagory_example','catagory_example','catagory_example', 'catagory
 @bot.message_handler(commands=['start', 'hello'])
 def startbot(message):
     # bot.reply_to(message, "welcome!!!", reply_markup=menu)
+    bot.send_message(message.chat.id, "Welcome to KBS Grocery")
     if db.checkUsernameExist(message.chat.id):
-        data=db.get_info(message.chat.id)
-        print(data)
+        d=db.get_info(message.chat.id)
+        data = d[0]
+        bot.send_message(message.chat.id, ("hello "+data[1]+"\nPlease select an option.."), reply_markup=menu)
+        # print(data[1])
+        
     else:
         db.addUser(message.chat.id, message.from_user.first_name, message.from_user.last_name)
         print("user added to database ")
-        bot.reply_to(message, "registerd succesfully")
+        d=db.get_info(message.chat.id)
+        data = d[0]
+        bot.send_message(message.chat.id, ("hello "+data[1]+"\nPlease select an option.."), reply_markup=menu)
+        # bot.reply_to(message, "registerd succesfully")
 
 
 @bot.message_handler(commands=['show_products'])
 def product_catogory(message):
-    bot.reply_to(message, 'select catogory', reply_markup=catogory)
+    bot.send_message(message.chat.id, 'Please select the catogory', reply_markup=catogory)
 
 @bot.message_handler(func=lambda msg: True)
 def print_message(message):
