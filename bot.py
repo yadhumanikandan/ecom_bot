@@ -3,7 +3,12 @@ from telebot import types
 import dataBase
 
 
-bot = telebot.TeleBot("6076557712:AAHiHRMsr68rOUm1-5BjpuDZUf4pmXwWimA")
+TOKEN = None
+
+with open("token.txt") as f:
+    TOKEN = f.read().strip()
+
+bot = telebot.TeleBot(TOKEN)
 
 db = dataBase.DataBase()
 
