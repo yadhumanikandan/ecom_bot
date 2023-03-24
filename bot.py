@@ -18,7 +18,12 @@ menu = types.ReplyKeyboardMarkup(resize_keyboard=True)
 menu.add("/show_products")
 
 catogory = types.ReplyKeyboardMarkup(resize_keyboard=True)
-catogory.add('catagory_example','catagory_example','catagory_example', 'catagory_example')
+catogory.row('catagory_1','catagory_2','catagory_3', 'catagory_3')
+catogory.row('catagory_4','catagory_5','catagory_6', 'catagory_7')
+catogory.row('catagory_8','catagory_9','catagory_10', 'catagory_11')
+catogory.row('catagory_12','catagory_13','catagory_14', 'catagory_15')
+catogory.row('catagory_16','catagory_17','catagory_18', 'catagory_19')
+catogory.row('catagory_20','catagory_21','catagory_22', 'catagory_23')
 
 
 @bot.message_handler(commands=['start', 'hello'])
