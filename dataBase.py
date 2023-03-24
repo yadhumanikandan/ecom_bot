@@ -6,7 +6,7 @@ class DataBase:
         self.connection = sqlite3.connect("users.db", check_same_thread=False)
         self.cursor = self.connection.cursor()
         try:
-            self.cursor.execute("""CREATE TABLE users(id int, first_name TEXT, last_name TEXT)""")
+            self.cursor.execute("""CREATE TABLE users(id int, first_name TEXT, last_name TEXT, fullname TEXT, phone_number TEXT, address TEXT)""")
             self.connection.commit()
         except:
             print("Already created!!")
@@ -22,9 +22,9 @@ class DataBase:
             return True
         
     
-    def addUser(self, id, firstname, lastname):
-        sql = "INSERT INTO users VALUES (?, ?, ?)"
-        self.cursor.execute(sql, (id,firstname,lastname))
+    def addUser(self, id, firstname, lastname, fname, number, address):
+        sql = "INSERT INTO users VALUES (?, ?, ?, ?, ?, ?)"
+        self.cursor.execute(sql, (id,firstname,lastname, fname, number, address))
         self.connection.commit()
 
 
@@ -33,6 +33,23 @@ class DataBase:
         self.cursor.execute(sql, [(id)])
         data = self.cursor.fetchall()
         return data
+    
+    def updateFname(self, id, name):
+        sql = "UPDATE users SET fullname = ? WHERE id = ?"
+        self.cursor.execute(sql, (name, id))
+        self.connection.commit()
+
+    def updatePhone(self, id, number):
+        sql = "UPDATE users SET phone_number = ? WHERE id = ?"
+        self.cursor.execute(sql, (number, id))
+        self.connection.commit()
+
+    def updateAddress(self, id, address):
+        sql = "UPDATE users SET address = ? WHERE id = ?"
+        self.cursor.execute(sql, (address, id))
+        self.connection.commit()
+
+    
 
 
 
