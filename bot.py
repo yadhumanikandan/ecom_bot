@@ -81,13 +81,17 @@ def addres(message):
 def product_catogory(message):
     bot.send_message(message.chat.id, 'Please select the catogory', reply_markup=catogory)
 
+#to debug a security problem
+@bot.message_handler(commands=['print_data'])
+def printData(message):
+    userData = db.get_info(message.chat.id)
+    allData = userData[0]
+    print(allData)
+
 @bot.message_handler(func=lambda msg: True)
 def print_message(message):
     print(message.text)
 
-#to debug a security problem
-@bot.message_handler(commands=['print_data'])
-def printData(message):
-    print(allData)
+
 
 bot.infinity_polling()
